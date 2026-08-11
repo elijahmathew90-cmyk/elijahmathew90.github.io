@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elijah Mathew | Aerospace & Finance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- EXACT COLOR PALETTE --- */
+        :root {
+            --orbital-blue: #174BDB;
+            --black-titanium: #080A0D;
+            --machined-graphite: #3E4348;
+            --alloy-white: #E8EAEC;
+            --aviation-amber: #F5B800;
+            --steel-gray: #9DA5AD;
+            --instrument-green: #32B67A;
+            --warning-red: #D94B3D;
+        }
+
+        /* --- BASE & TYPOGRAPHY --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            background-color: var(--alloy-white);
+            color: var(--black-titanium);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
+        
+        /* --- HERO SECTION --- */
+        #hero {
+            background-color: var(--orbital-blue);
+            padding: 5rem 0;
+            border-bottom: 4px solid var(--black-titanium);
+        }
+        .hero-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        .hero-text h1 { 
+            font-size: 3.5rem; 
+            margin-bottom: 0.5rem; 
+            color: var(--aviation-amber); 
+        }
+        .hero-text .tagline { 
+            font-size: 1.4rem; 
+            font-weight: 600; 
+            margin-bottom: 1rem; 
+            color: var(--aviation-amber); 
+        }
+        .hero-text p { 
+            max-width: 550px; 
+            font-size: 1.05rem; 
+            color: var(--aviation-amber); 
+            opacity: 0.9; 
+            margin-bottom: 2rem; 
+        }
+        
+        .btn-primary {
+            background: var(--black-titanium);
+            color: var(--aviation-amber);
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            border: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.2s ease;
+            margin-right: 1rem;
+        }
+        .btn-primary:hover { 
+            background: var(--aviation-amber); 
+            color: var(--black-titanium); 
+            border: none;
+        }
+        .btn-secondary {
+            color: var(--aviation-amber);
+            border-bottom: 2px solid var(--aviation-amber);
+            font-weight: 600;
+            padding-bottom: 2px;
+            transition: 0.2s;
+        }
+        .btn-secondary:hover {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .hero-visual {
+            background: var(--alloy-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--black-titanium);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.2);
+            color: var(--black-titanium);
+        }
+
+        /* --- CONTACT BAR --- */
+        #contact-bar {
+            background: var(--alloy-white);
+            border-bottom: 2px solid var(--machined-graphite);
+            padding: 1rem 0;
+        }
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--machined-graphite);
+            font-weight: 600;
+        }
+        .contact-grid a:hover { color: var(--orbital-blue); border-bottom: 2px solid var(--aviation-amber); }
+        .pipe-sep { color: var(--steel-gray); padding: 0 0.25rem; }
+
+        /* --- SECTION HEADERS --- */
+        section { padding: 4rem 0; }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--black-titanium);
+        }
+        .section-sub { color: var(--steel-gray); font-size: 1.1rem; margin-bottom: 2.5rem; }
+
+        /* --- PROJECTS CARDS (COVERED & NUMBERED - NO YELLOW ANIMATION) --- */
+        #projects { background: var(--alloy-white); }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: var(--machined-graphite);
+            color: var(--alloy-white);
+            padding: 2rem;
+            border-radius: 6px;
+            border: none; /* Clean borderless box */
+            position: relative;
+            overflow: hidden;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+            min-height: 300px;
+        }
+        .project-card:hover { transform: translateY(-4px); }
+
+        /* THE NUMBERED COVER */
+        .project-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--machined-graphite);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            border-radius: 6px;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .project-cover span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 7rem;
+            font-weight: 700;
+            color: var(--alloy-white);
+            opacity: 0.15; /* Subtle background number */
+        }
+        /* COVER REVEAL ANIMATION ON HOVER */
+        .project-card:hover .project-cover {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ACTUAL CONTENT (Hidden until hover) */
+        .project-content {
+            position: relative;
+            z-index: 1;
+        }
+        .project-content h3 { color: #fff; font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .project-content .role-tag { color: var(--aviation-amber); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 1rem; }
+        .project-content .summary { color: #d1d5db; margin-bottom: 1rem; }
+        .project-content ul { list-style: none; padding-left: 0; margin-bottom: 1.5rem; color: #cbd5e1; font-size: 0.95rem; }
+        .project-content ul li { margin-bottom: 0.4rem; }
+        .project-content ul li::before { content: "▹ "; color: var(--aviation-amber); }
+        .project-stack { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.8rem; 
+            color: var(--steel-gray); 
+            border-top: 1px solid #555; 
+            padding-top: 1rem; 
+            margin-top: auto;
+        }
+        .project-links { margin-top: 1rem; }
+        .project-links a { color: var(--alloy-white); border-bottom: 1px solid var(--aviation-amber); margin-right: 1rem; font-weight: 600; }
+
+        /* --- SKILLS & TECH (GRASS ANIMATION) --- */
+        #skills { background: var(--alloy-white); }
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .skills-list p { margin-bottom: 1rem; }
+        .skills-list ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        
+        @keyframes popUp {
+            0% { opacity: 0; transform: translateY(40px) scale(0.8); }
+            70% { opacity: 1; transform: translateY(-6px) scale(1.05); }
+            100% { opacity: 1; transform: translateY(0px) scale(1); }
+        }
+        @keyframes sway {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(0.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .skills-list ul li { 
+            background: var(--machined-graphite); 
+            color: var(--alloy-white); 
+            padding: 0.4rem 1rem; 
+            border-radius: 20px; 
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            opacity: 0;
+            animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
+                       sway 3.5s ease-in-out infinite alternate;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+        }
+
+        .skills-list ul li:nth-child(1)  { animation-delay: 0.1s, 0.7s; }
+        .skills-list ul li:nth-child(2)  { animation-delay: 0.15s, 0.75s; }
+        .skills-list ul li:nth-child(3)  { animation-delay: 0.2s, 0.8s; }
+        .skills-list ul li:nth-child(4)  { animation-delay: 0.25s, 0.85s; }
+        .skills-list ul li:nth-child(5)  { animation-delay: 0.3s, 0.9s; }
+        .skills-list ul li:nth-child(6)  { animation-delay: 0.35s, 0.95s; }
+        .skills-list ul li:nth-child(7)  { animation-delay: 0.4s, 1.0s; }
+        .skills-list ul li:nth-child(8)  { animation-delay: 0.45s, 1.05s; }
+        .skills-list ul li:nth-child(9)  { animation-delay: 0.5s, 1.1s; }
+        .skills-list ul li:nth-child(10) { animation-delay: 0.55s, 1.15s; }
+        .skills-list ul li:nth-child(11) { animation-delay: 0.6s, 1.2s; }
+        .skills-list ul li:nth-child(12) { animation-delay: 0.65s, 1.25s; }
+        .skills-list ul li:nth-child(13) { animation-delay: 0.7s, 1.3s; }
+        .skills-list ul li:nth-child(14) { animation-delay: 0.75s, 1.35s; }
+        .skills-list ul li:nth-child(15) { animation-delay: 0.8s, 1.4s; }
+
+        .skills-list ul li:hover {
+            animation-play-state: paused;
+            transform: translateY(-12px) scale(1.2) rotate(3deg) !important;
+            background: var(--aviation-amber);
+            color: var(--black-titanium);
+            box-shadow: 0 0 25px rgba(245, 184, 0, 0.7);
+        }
+
+        /* --- EXPERIENCE & ACHIEVEMENTS --- */
+        .exp-item { 
+            display: flex; 
+            gap: 1.5rem; 
+            margin-bottom: 1.5rem; 
+            border-left: 3px solid var(--orbital-blue); 
+            padding-left: 1.5rem;
+        }
+        .exp-item .title { font-weight: 600; }
+        .exp-item .org { font-weight: 400; color: var(--machined-graphite); }
+        .exp-item .date { font-family: 'JetBrains Mono', monospace; color: var(--steel-gray); font-size: 0.9rem; min-width: 110px; }
+
+        .achievement-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .achievement-item { background: #fff; padding: 1rem; border: 1px solid var(--machined-graphite); border-radius: 4px; }
+
+        /* --- THOUGHT & VISION --- */
+        #vision { background: var(--black-titanium); color: var(--alloy-white); }
+        #vision h2 { color: var(--alloy-white); }
+        #vision .section-sub { color: var(--steel-gray); }
+        .vision-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .vision-card { background: var(--machined-graphite); padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--aviation-amber); }
+        .vision-card h4 { color: #fff; margin-bottom: 0.5rem; }
+        .vision-card p { color: #d1d5db; font-size: 0.95rem; }
+        .vision-card a { color: var(--aviation-amber); text-decoration: underline; }
+
+        /* --- FOOTER --- */
+        footer { background: var(--black-titanium); color: var(--steel-gray); padding: 3rem 0; text-align: center; border-top: 4px solid var(--orbital-blue); }
+        footer a { color: var(--alloy-white); }
+        
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-grid { flex-direction: column; text-align: center; }
+            .skills-grid, .achievement-list, .vision-cards { grid-template-columns: 1fr; }
+            .contact-grid { gap: 0.25rem; flex-direction: column; align-items: center; }
+            .exp-item { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HERO SECTION -->
+    <header id="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <h1>Elijah Mathew</h1>
+                <div class="tagline">Student developer building systems at the intersection of software, aerospace, and finance.</div>
+                <p>Engineer and Developer with hands-on experience in satellite systems, orbital mechanics, and algorithmic trading. Proven leader through Civil Air Patrol and founder of multiple end-to-end shipped digital products.</p>
+                <div>
+                    <a href="#projects" class="btn-primary">View Projects</a>
+                    <a href="resume.pdf" target="_blank" class="btn-secondary">Download Resume</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <span style="font-weight: 700; color: var(--orbital-blue);">// SYS_ARCH</span><br>
+                [ Slate · Orbital · SatoriDaily ]<br>
+                <span style="color: var(--instrument-green);">▲ Systems Online</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. CONTACTS -->
+    <section id="contact-bar">
+        <div class="container contact-grid">
+            <a href="mailto:elijahmathew90@gmail.com">elijahmathew90@gmail.com</a>
+            <span class="pipe-sep">|</span>
+            <a href="#">&#9742; (240)-712-1126</a>
+            <span class="pipe-sep">|</span>
+            <a href="#">LinkedIn</a>
+            <span class="pipe-sep">|</span>
+            <a href="#">elijahmathew90</a>
+        </div>
+    </section>
+
+    <!-- 3. FEATURED PROJECTS (Covered & Numbered 1-6 - Clean Reveal) -->
+    <section id="projects">
+        <div class="container">
+            <h2>Selected Projects</h2>
+        
+            
+            <div class="projects-grid">
+                
+                <!-- 1. Slate -->
+                <div class="project-card">
+                    <div class="project-cover"><span>1</span></div>
+                    <div class="project-content">
+                        <h3>Slate</h3>
+                        <div class="role-tag">AI Investing Assistant</div>
+                        <p class="summary">Algorithmic trading bot analyzing billions of data points. Achieved a 10,000% return ($10 → $1,000) over one year via data-driven signals and a Telegram notifier.</p>
+                        <ul>
+                            <li>Engineered automated trade execution workflow with push notifications via Telegram.</li>
+                            <li>Analyzed billions of market data points to generate buy/sell signals.</li>
+                            <li>Demonstrated expertise in financial data analysis and algorithm development.</li>
+                        </ul>
+                        <div class="project-stack">Built with: Python · API Automation</div>
+                        <div class="project-links">
+                            <a href="https://slateinvesting.netlify.app/" target="_blank">Website</a>
+                            <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Orbital Mechs -->
+                <div class="project-card">
+                    <div class="project-cover"><span>2</span></div>
+                    <div class="project-content">
+                        <h3>Orbital Mechanics.</h3>
+                        <div class="role-tag">Orbital Mechanics Simulation (Independent Research)</div>
+                        <p class="summary">Developed Python simulation using Poliastro library to analyze orbital period and velocity variations across five LEO altitudes (300–1100 km), demonstrating Kepler's Third Law and two-body orbital dynamics.</p>
+                        <ul>
+                            <li>Implemented parametric study with numerical orbit propagation (period: 90–106 min, velocity: 7.1–7.7 km/s).</li>
+                            <li>Visualized results with Matplotlib using 2D trajectory plots and quantitative trend analysis.</li>
+                            <li>Analyzed trade-offs in satellite mission design for Earth observation and communications.</li>
+                        </ul>
+                        <div class="project-stack">Built with: Python · NumPy · Poliastro</div>
+                        <div class="project-links">
+                            <a href="#">View case study</a> <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. SatoriDaily -->
+                <div class="project-card">
+                    <div class="project-cover"><span>3</span></div>
+                    <div class="project-content">
+                        <h3>Satori Daily</h3>
+                        <div class="role-tag">Daily Affirmation & Reflection App</div>
+                        <p class="summary">A daily affirmation app delivering curated Japanese-style quotes and philosophical concepts to inspire reflection and mindfulness throughout the day.</p>
+                        <ul>
+                            <li>Emphasizes concept‑tracking and daily learning habits.</li>
+                            <li>Clean, minimal UX designed for low cognitive load.</li>
+                            <li>Curated content pipeline enabling daily fresh deliveries.</li>
+                        </ul>
+                        <div class="project-stack">Built with: Python · Mindfulness API</div>
+                        <div class="project-links">
+                            <a href="#">View case study</a> <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. NFL Coach -->
+                <div class="project-card">
+                    <div class="project-cover"><span>4</span></div>
+                    <div class="project-content">
+                        <h3>NFL Predict</h3>
+                        <div class="role-tag">NFL Prediction Model</div>
+                        <p class="summary">Predictive sports analytics model. Leverages historical data and machine learning to forecast player performance, currently achieving an 87.3% prediction accuracy rate.</p>
+                        <ul>
+                            <li>Utilized machine learning to analyze historical sports data.</li>
+                            <li>Continuously refined algorithms to maintain high forecasting precision.</li>
+                        </ul>
+                        <div class="project-stack">Built with: ML · Data Science</div>
+                        <div class="project-links">
+                            <a href="#">View case study</a> <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Ballistics -->
+                <div class="project-card">
+                    <div class="project-cover"><span>5</span></div>
+                    <div class="project-content">
+                        <h3>Ballistic Aerodynamics</h3>
+                        <div class="role-tag">Projectile Motion Physics Simulation</div>
+                        <p class="summary">Computational physics model simulating projectile trajectories, aerodynamic drag, and impact points. A deep-dive into classical mechanics.</p>
+                        <ul>
+                            <li>Modeled real-world physics with numerical methods.</li>
+                            <li>Visualized drag effects and trajectory variations.</li>
+                        </ul>
+                        <div class="project-stack">Built with: Physics · Numerical Methods</div>
+                        <div class="project-links">
+                            <a href="#">View case study</a> <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Rocket Payload -->
+                <div class="project-card">
+                    <div class="project-cover"><span>6</span></div>
+                    <div class="project-content">
+                        <h3>Rocket Payload</h3>
+                        <div class="role-tag">3D Payload Housing (CAD)</div>
+                        <p class="summary">Designed a 3D-printable payload housing using Autodesk Inventor. Applied stress analysis simulations to optimize structural integrity while minimizing mass.</p>
+                        <ul>
+                            <li>Applied engineering design process including brainstorming, 3D modeling, and prototyping.</li>
+                            <li>Conducted stress analysis to ensure structural resilience.</li>
+                        </ul>
+                        <div class="project-stack">Built with: Autodesk Inventor · Solid Mechanics</div>
+                        <div class="project-links">
+                            <a href="#">View case study</a> <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SKILLS & TECH STACK -->
+    <section id="skills">
+        <div class="container">
+            <h2>Skills & Tech Stack</h2>
+            
+            <div class="skills-grid">
+                <div class="skills-list">
+                    <p>I design systems end to end, from concept, to UI, to deployment.</p>
+                </div>
+                <div class="skills-list">
+                    <ul>
+                        <li>Python</li><li>JavaScript</li><li>React / React Native</li><li>Node.js</li>
+                        <li>CI/CD pipelines</li><li>Docker</li><li>Kubernetes</li><li>Linux/Terminal</li>
+                        <li>REST APIs</li><li>JSON</li><li>Data modeling</li><li>Analytics dashboards</li>
+                        <li>DECA Innovation</li><li>Market research</li><li>Pitch decks</li>
+                        <li>VS Code</li><li>Git/GitHub</li><li>Jupyter</li><li>Figma (UI)</li><li>Notion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. EXPERIENCE & ROLES -->
+    <section id="experience">
+        <div class="container">
+            <h2>Experience & Roles</h2>
+            <div class="section-sub">Responsibility, communication, and real‑world projects.</div>
+            
+            <div class="exp-item">
+                <div class="date">2024</div>
+                <div>
+                    <div class="title">APL Space Science Program <span class="org">· Johns Hopkins Applied Physics Laboratory</span></div>
+                    <div>Competitively selected for APL's 8th Grade Space Science Summer Program; collaborated directly with engineers on satellite communications, space exploration, and defense technologies.</div>
+                </div>
+            </div>
+            
+            <div class="exp-item">
+                <div class="date">2025 – 2026</div>
+                <div>
+                    <div class="title">Area Representative <span class="org">· MGOCSM</span></div>
+                    <div>Act as liaison between local group and area community—attend meetings, share updates, and represent our group’s perspective.</div>
+                </div>
+            </div>
+
+            <div class="exp-item">
+                <div class="date">2023 – Present</div>
+                <div>
+                    <div class="title">Appointment Setter <span class="org">· Freelance / Industry</span></div>
+                    <div>Building communication discipline and basic sales/CRM experience through client outreach and scheduling.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. ACHIEVEMENTS & COMPETITIONS -->
+    <section id="achievements">
+        <div class="container">
+            <h2>Achievements & Competitions</h2>
+            <div class="section-sub">High-signal wins and academic rigor.</div>
+            
+            <div class="achievement-list">
+                <div class="achievement-item"><strong>APL Space Science Program</strong> – Competitively selected for Johns Hopkins APL (2024).</div>
+                <div class="achievement-item"><strong>Wright Brothers Award</strong> – Civil Air Patrol (CAP) foundational aerospace leadership.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. THOUGHT & VISION -->
+    <section id="vision">
+        <div class="container">
+            <h2>Notes & Insights</h2>
+            <div class="section-sub">How I think about the intersection of tech, aerospace, and finance.</div>
+            
+            <div class="vision-cards">
+                <div class="vision-card">
+                    <h4>Why reliability patterns from aerospace should influence how we design financial systems</h4>
+                    <p>Exploring how redundancy, failover, and rigorous testing in space systems can prevent catastrophic failures in fintech infrastructure.</p>
+                    <a href="#">Read note →</a>
+                </div>
+                <div class="vision-card">
+                    <h4>What I learned building Slate about making complex systems usable</h4>
+                    <p>Tradeoffs between algorithmic complexity and user trust, and how designing for automated trading changed my approach to UX.</p>
+                    <a href="#">Read note →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FOOTER -->
+    <footer>
+        <div class="container">
+            <p style="margin-bottom: 1rem;">
+                <a href="mailto:elijahmathew90@gmail.com">elijahmathew90@gmail.com</a> · 
+                <a href="#">LinkedIn</a> · 
+                <a href="#">GitHub</a>
+            </p>
+            <p style="font-size: 0.9rem;">© 2026 Elijah Mathew · Built with your custom industrial palette.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
